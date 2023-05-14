@@ -4,18 +4,16 @@ import java.util.Calendar;
 
 public class Magazine extends Products{
     private Category category;
-    private String urlM;
     private int valueSub;
     private String periodEmission;
     private int numsubActive;
 
-    public Magazine(String id, String name, int numreadedPages, Calendar datePost, int readedPages,Category category,String urlM,int valueSub,String periodEmission,int numsubActive) {
-        super(id, name, numreadedPages, datePost, readedPages);
-        this.category = category;
-        this.urlM = urlM;
+    public Magazine( String name, int numPages, Calendar datePost, String URL, int category,int valueSub,String periodEmission) {
+        super( name, numPages, datePost, URL);
+        
         this.valueSub = valueSub;
         this.periodEmission= periodEmission;
-        this.numsubActive= numsubActive;
+      
     }
 
     public Category getCategory() {
@@ -24,14 +22,6 @@ public class Magazine extends Products{
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public String getUrlM() {
-        return urlM;
-    }
-
-    public void setUrlM(String urlM) {
-        this.urlM = urlM;
     }
 
     public int getValueSub() {

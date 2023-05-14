@@ -1,20 +1,21 @@
 package model;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class Products {
     private String id;
     protected String name;
-    private int numreadedPages;
-    private Calendar DatePost;
+    protected int numPages;
+    protected Calendar DatePost;
     private int readedPages;
+    protected String URL;
 
-    public Products(String id, String name, int numreadedPages, Calendar datePost, int readedPages) {
-        this.id = id;
+    public Products( String name, int numPages, Calendar datePost, String URL) {
+       
         this.name = name;
-        this.numreadedPages = numreadedPages;
+        this.numPages = numPages;
         this.DatePost = datePost;
-        this.readedPages = readedPages;
+        
+        this.URL= URL;
     }
 
     public String getId() {
@@ -34,11 +35,11 @@ public class Products {
     }
 
     public int getNumPages() {
-        return numreadedPages;
+        return numPages;
     }
 
     public void setNumPages(int numPages) {
-        this.numreadedPages = numPages;
+        this.numPages = numPages;
     }
 
     public Calendar getDatePost() {
@@ -55,6 +56,18 @@ public class Products {
 
     public void setReadedPages(int readedPages) {
         this.readedPages = readedPages;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public String ModifyBook() {
+        return null;
     }
 
     

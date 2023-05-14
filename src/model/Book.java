@@ -1,54 +1,53 @@
 package model;
 
+import java.net.URL;
 import java.util.Calendar;
 
 public class Book extends Products {
     private String review; 
     private Genre genre;
-    private String urlb;
     private double priceB;
-    private int numSouldB;
   
-    public Book(String id, String name, int numPages, Calendar datePost, int readedPages,String review,Genre genre, String urlb, double priceB,int numSouldB) {
-        super(id, name, numPages, datePost, readedPages);
+    public Book( String name, int numPages, Calendar datePost,String URL,String review,int genre, double priceB) {
+        super( name, numPages, datePost, URL);
         this.review= review;
-        this.genre= genre;
-        this.urlb= urlb;
         this.priceB= priceB;
-        this.numSouldB= numSouldB;
    
 
     }
+  
     public String getReview() {
         return review;
     }
     public void setReview(String review) {
         this.review = review;
     }
-    public Genre getGender() {
+    public Genre getGenre() {
         return genre;
     }
-    public void setGender(Genre gender) {
-        this.genre = gender;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
-    public String getUrlb() {
-        return urlb;
-    }
-    public void setUrlb(String urlb) {
-        this.urlb = urlb;
-    }
+
     public double getPriceB() {
         return priceB;
     }
     public void setPriceB(double priceB) {
         this.priceB = priceB;
     }
-    public int getNumSouldB() {
-        return numSouldB;
-    }
-    public void setNumSouldB(int numSouldB) {
-        this.numSouldB = numSouldB;
-    }
+
+    public String toString() {
+
+		String msg = "";
+
+	
+        msg = "\nName: " + name + "\nNumber of Pages " + numPages + "\nURL " + URL + "\nReview" + review + "\nGenre" + genre + "Price" + priceB;
+
+		return msg;
+
+	}
+
+    
 
     
 }

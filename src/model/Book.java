@@ -8,13 +8,21 @@ public class Book extends Products {
     private Genre genre;
     private double priceB;
   
-    public Book( String name, int numPages, Calendar datePost,String URL,String review,int genre, double priceB) {
-        super( name, numPages, datePost, URL);
+    public Book( String code,String name, int numPages, Calendar datePost,String URL,String review,int genre, double priceB) {
+        super( code, name, numPages, datePost, URL);
+
         this.review= review;
+        setGenre(genre);
         this.priceB= priceB;
    
-
     }
+    public Book(Book copyBook){
+        super(copyBook.getCode(),copyBook.getName(),copyBook.getNumPages(),copyBook.getDatePost(),copyBook.getURL());
+        this.review = getReview();
+        this.priceB= getPriceB();
+        this.genre = getGenre();
+    }
+
   
     public String getReview() {
         return review;
@@ -25,8 +33,17 @@ public class Book extends Products {
     public Genre getGenre() {
         return genre;
     }
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setGenre(int genre) {
+        Genre typegenre;
+			
+        if(genre==1){
+        typegenre= Genre.FICTION_SCIENCE;
+        }else if(genre==2){
+        typegenre= Genre.FANTASY;
+        }else {
+        typegenre= Genre.HISTORICAL_NOVEL;
+        }
+        this.genre = typegenre;
     }
 
     public double getPriceB() {
@@ -41,13 +58,9 @@ public class Book extends Products {
 		String msg = "";
 
 	
-        msg = "\nName: " + name + "\nNumber of Pages " + numPages + "\nURL " + URL + "\nReview" + review + "\nGenre" + genre + "Price" + priceB;
+        msg = "\nId: "+ code+"\nName: " + name + "\nNumber of Pages: " + numPages + "\nURL " + URL + "\nReview: " + review + "\nGenre: " + genre + "\nPrice: " + priceB;
 
 		return msg;
 
 	}
-
-    
-
-    
 }

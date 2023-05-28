@@ -8,12 +8,19 @@ public class Magazine extends Products{
     private String periodEmission;
     private int numsubActive;
 
-    public Magazine( String name, int numPages, Calendar datePost, String URL, int category,int valueSub,String periodEmission) {
-        super( name, numPages, datePost, URL);
-        
+    public Magazine(String code, String name, int numPages, Calendar datePost, String URL, Category category,int valueSub,String periodEmission) {
+        super(code, name, numPages, datePost, URL);
+        this.category=category;
         this.valueSub = valueSub;
         this.periodEmission= periodEmission;
       
+    }
+
+    public Magazine(Magazine copyMagazine){
+        super(copyMagazine.getCode(),copyMagazine.getName(),copyMagazine.getNumPages(),copyMagazine.getDatePost(),copyMagazine.getURL());
+        this.category= copyMagazine.getCategory();
+        this.valueSub= copyMagazine.getValueSub();
+        this.periodEmission= copyMagazine.getPeriodEmission();
     }
 
     public Category getCategory() {
@@ -47,5 +54,16 @@ public class Magazine extends Products{
     public void setNumsubActive(int numsubActive) {
         this.numsubActive = numsubActive;
     }
+
+    public String toString() {
+
+		String msg = "";
+
+	
+        msg =  "\nId: "+ code+"\nName: " + name + "\nNumber of Pages: " + numPages + "\nURL: " + URL + "\nCategory: " + category + "\nValue sub: " + valueSub + "\nPeriod of emission: " + periodEmission;
+
+		return msg;
+
+	}
 
 }

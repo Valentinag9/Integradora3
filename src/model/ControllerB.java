@@ -3,16 +3,31 @@ package model;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 
 public class ControllerB {
-    private ArrayList<User> users;
+    private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Products> products;
 
     public ControllerB(){
-        users = new ArrayList<>();
+        
         products = new ArrayList<>();
-    }
+        testCase();
+	}
+
+    public void testCase(){
+        User user1 = new Regular("Valentina", "1107839938", null);
+        User user2 = new Premium("Juan", "94503232", null);
+
+        users.add(user1);
+        users.add(user2);
+
+        Products product1 = new Book("A01", "Las mil y una noches", 430, null, "www.milyunanoches.com", "reseña", 2, 90000);
+        Products product2 = new Magazine("AB3", "l", 1220, null, "www.milyunanoches.com", null, 70000, "p");
+        products.add(product1);
+        products.add(product2);
+    }   
 
     /**
         * Register a new user in the system.
@@ -36,6 +51,30 @@ public class ControllerB {
         }
        return users.add(newUser);
     }
+  
+   
+
+    public int sumPagesBook(){
+        int acumbook = 0;
+
+        for(int i = 0; i < products.size(); i++){
+            if(products.get(i) instanceof Book){
+                acumbook += products.get(i).getReadedPages();
+            }
+        }
+        return acumbook;
+    }
+
+    public int sumPagesMagazine(){
+        int acumbook = 0;
+
+        for(int i = 0; i < products.size(); i++){
+            if(products.get(i) instanceof Magazine){
+                acumbook += products.get(i).getReadedPages();
+            }
+        }
+        return acumbook;
+    }
 
     /**
      * Register a new book in the system.
@@ -57,20 +96,22 @@ public class ControllerB {
     public boolean registerBook(String name, int numPages, int dayPublish, int monthPublish , int yearPublish, String URL,String review,int genre, double priceB){
         Products newproducts = null;
 
-        Genre typegenre;
-			
-        if(genre==1){
-        typegenre= Genre.FICTION_SCIENCE;
-        }else if(genre==2){
-        typegenre= Genre.FANTASY;
-        }else {
-        typegenre= Genre.HISTORICAL_NOVEL;
+        int length=3;
+        String hexadecimal = "ABCDEF0123456789";
+        StringBuilder sb = new StringBuilder(length);
+        Random random = new Random();
+        
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(hexadecimal.length());
+            char randomChar = hexadecimal.charAt(randomIndex);
+            sb.append(randomChar);
         }
+        String code=sb.toString();
 
         Calendar datePost = new GregorianCalendar(dayPublish, monthPublish- 1,
         yearPublish);
         
-        newproducts = new Book(name, numPages,datePost, URL,review,genre, priceB);
+        newproducts = new Book(code,name, numPages,datePost, URL,review,genre, priceB);
 
         return products.add(newproducts);
     }
@@ -91,10 +132,20 @@ public class ControllerB {
      * @return true if the magazine registration was successful and it was added to the product collection,
      * false otherwise.
     */
-
-    
     public boolean registerMagazine(String name, int numPages, int dayPublish, int monthPublish , int yearPublish,  String URL,int category,int valueSub,String periodEmission){
-        Products newproducts = null;
+        
+        int length=3;
+        String alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder sb = new StringBuilder(length);
+        Random random = new Random();
+        
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(alphanumeric.length());
+            char randomChar = alphanumeric.charAt(randomIndex);
+            sb.append(randomChar);
+        }
+        String code=sb.toString();
+  
 
        Category typeCategory;
 
@@ -110,15 +161,17 @@ public class ControllerB {
         Calendar datePost = new GregorianCalendar(dayPublish, monthPublish- 1,
         yearPublish);
         
-        newproducts = new Magazine(name, numPages,datePost,URL,category,valueSub, periodEmission);
+        Products newproducts = new Magazine(code,name, numPages,datePost,URL,typeCategory,valueSub, periodEmission);
 
         return products.add(newproducts);
     }
+
     /**
      * List of books registered in the system.
      *
      * @return A string representing the list of registered books.
     */
+
 
     public String ListBook(){
         String listBook = "";
@@ -126,6 +179,57 @@ public class ControllerB {
         for(int i= 0; i <products.size(); i++){
             if(products.get(i) instanceof Book){
                 listBook+= (i+0)+"."+products.get(i).toString() + "\n";
+            }
+        }
+        return listBook;
+    }
+
+    /**
+     * Shows the library of a specific Premium user.
+     *
+     * @param opt1 the index of the user in the user list
+     * @return a string representing the Premium user's library
+    */
+    public String showUserLibraryPremium(int opt1){
+        String msg = "";
+
+        for(int i= 0; i<((Premium)users.get(opt1)).getProducts().length; i++){
+            for(int j = 0; j<((Premium)users.get(opt1)).getProducts()[0].length; i++){
+                if(users.get(opt1)instanceof Premium){
+                    msg+= " "+ ((Premium)users.get(opt1)).getProducts()[i][j]+"";
+                }
+            }
+        }
+        return msg;
+    }
+
+    /**
+     * Shows the library of a specific user.
+     *
+     * @param opt1 the index of the user in the user list
+     * @return a string representing the user's library
+    */
+
+    public String showUserLibrary(int opt1){
+        String msg = "";
+
+        for(int i= 0; i<((Regular)users.get(opt1)).getProducts().length; i++){
+            for(int j = 0; j<((Regular)users.get(opt1)).getProducts()[0].length; i++){
+                if(users.get(opt1)instanceof Regular){
+                    msg+= " "+ ((Regular)users.get(opt1)).getProducts()[i][j]+"";
+                }
+            }
+        }
+        return msg;
+    }
+
+
+    public ArrayList<String>  getListBook(){
+        ArrayList<String> listBook = new ArrayList<>();
+
+        for(int i= 0; i <products.size(); i++){
+            if(products.get(i) instanceof Book){
+                listBook.add(products.get(i).code);
             }
         }
         return listBook;
@@ -167,7 +271,7 @@ public class ControllerB {
 
         for(int i=0; i<products.size();i++){
             if(products.get(i) instanceof Magazine){
-                listMagazine+= (i+1)+"."+products.get(i).getName()+"\n";
+                listMagazine+= (i+1)+"."+products.get(i).toString() + "\n";
             }
         }
         return listMagazine;
@@ -217,13 +321,6 @@ public class ControllerB {
 
     public boolean modifyBooks(int option, String newName, int newNumPages, int newdayPublish, int newmonthPublish, int newyearPublish,String newURL,String newReview, int newGenre, Double  newpriceB){
 
-        Genre genre = Genre.FICTION_SCIENCE;
-		if(newGenre==2){
-			genre = Genre.FANTASY;
-		} else if(newGenre ==3){
-			genre = Genre.HISTORICAL_NOVEL;
-		}
-
         Calendar newDatePost = new GregorianCalendar(newyearPublish, (newmonthPublish - 1), newdayPublish );
 
         for(int i = 0; i< products.size(); i++){
@@ -236,7 +333,7 @@ public class ControllerB {
                 book.setDatePost(newDatePost);
                 book.setURL(newURL);
                 ((Book) book).setReview(newReview);
-                ((Book) book).setGenre(genre);
+                ((Book) book).setGenre(newGenre);
                 ((Book) book).setPriceB(newpriceB);
         
                 return true; 
@@ -326,6 +423,105 @@ public class ControllerB {
         }
         products.remove(magazineIndex);
         return true;
+    }
+
+    /**
+     * Make the purchase of a book for a specific user.
+     *
+     * @param optionBuy the index of the book to buy in the product list
+     * @param userBook the user's index in the user list
+     * @return true if the purchase was successful, false otherwise
+    */
+    public boolean purchaseBook(int optionBuy, int userBook){
+        Products buybook= null; 
+        if(products.get(optionBuy) instanceof Book){
+            buybook = new Book((Book)products.get(optionBuy));
+        }
+
+        return users.get(userBook).buybook(buybook);
+    }
+    /**
+     * Realiza la compra de una revista para un usuario específico.
+     *
+     * @param optionBuyM el índice de la revista a comprar en la lista de productos
+     * @param userMagazine el índice del usuario en la lista de usuarios
+     * @return true si la compra se realizó con éxito, false de lo contrario
+    */
+    public boolean purchaseMagazine(int optionBuyM, int userMagazine){
+        Products buyMagazine= null; 
+        if(products.get(optionBuyM) instanceof Magazine){
+            buyMagazine = new Magazine((Magazine)products.get(optionBuyM));
+        }
+
+        return users.get(userMagazine).buyMagazine(buyMagazine);
+    }
+   
+
+    /**
+     * Search for a regular user by their identification number.
+     *
+     * @param cc the identification number of the user to search for
+     * @return the regular user found or null if no match is found
+    */
+    
+    public User findUser(String cc){
+        for(int i= 0; i< users.size(); i ++){
+            if(users.get(i) instanceof Regular){
+                if(users.get(i).getCc().equals(cc)){
+                    return (Regular)users.get(i);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Search for a premium user by their identification number.
+     *
+     * @param cc the identification number of the user to search for
+     * @return the premium user found or null if no match is found
+    */
+
+    public User findUserP(String cc){
+        for(int i= 0; i< users.size(); i ++){
+            if(users.get(i) instanceof Premium){
+                if(users.get(i).getCc().equals(cc)){
+                    return (Premium)users.get(i);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Generate a list of premium users.
+     *
+     * @return a string representing the list of premium users
+    */
+    public String ListUserPremium(){
+        String listUsers = "";
+
+        for(int i= 0; i<users.size(); i++){
+            if(users.get(i) instanceof Premium){
+                listUsers+= (i+0)+"."+users.get(i).toString() + "\n";
+            }
+        }
+        return listUsers;
+    }
+    /**
+     * Genera una lista de usuarios regulares.
+     *
+     * @return una cadena que representa la lista de usuarios regulares
+    */
+    public String ListUserRegular(){
+        String listUsersR = "";
+
+        for(int i= 0; i<users.size(); i++){
+            if(users.get(i) instanceof Regular){
+                listUsersR+= (i+0)+"."+users.get(i).toString() + "\n";
+            }
+        }
+        return listUsersR;
     }
     
 }

@@ -6,11 +6,12 @@ public class Products {
     protected String name;
     protected int numPages;
     protected Calendar DatePost;
-    private int readedPages;
+    private int readedPages= 0;
     protected String URL;
+    protected String code;
 
-    public Products( String name, int numPages, Calendar datePost, String URL) {
-       
+    public Products(String code, String name, int numPages, Calendar datePost, String URL) {
+        this.code= code;
         this.name = name;
         this.numPages = numPages;
         this.DatePost = datePost;
@@ -18,6 +19,12 @@ public class Products {
         this.URL= URL;
     }
 
+    public String getCode(){
+        return code;
+    }
+    public void setCode(String code) {
+        this.code = code;
+    }
     public String getId() {
         return id;
     }
@@ -68,6 +75,9 @@ public class Products {
 
     public String ModifyBook() {
         return null;
+    }
+
+    public static void add(int verde, Products remove) {
     }
 
     

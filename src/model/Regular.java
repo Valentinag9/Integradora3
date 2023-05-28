@@ -37,9 +37,6 @@ public class Regular extends User {
 		return true;
 	}
 
-	
-
-
 	@Override
 	public boolean buyMagazine(Products purchasedProduct) {
 		for(int i = 0; i<newproducts.length;i++){

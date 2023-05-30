@@ -523,7 +523,29 @@ public class ControllerB {
         }
         return listUsersR;
     }
-    
+    /**
+     * Queries the library of a specific user and returns a message with the contents of the library.
+     *
+     * @param optionUser The index of the user in the user list.
+     * @return A message with the contents of the user's library.
+    */
+    public String consultLibrary(int optionUser){
+        String msg = "";
+        User user = users.get(optionUser);
+        msg += "Biblioteca de "+ user.getNameU();
+        msg += "\n" + users.get(optionUser).getMatrix();
+
+        return msg;
+    }
+
+    public int getNumPages(String productCode) {
+        for (Products product : products) {
+            if (product.getId().equals(productCode)) {
+                return product.getNumPages();
+            }
+        }
+        return 0;
+    }
 }
     
 

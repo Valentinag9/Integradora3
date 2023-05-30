@@ -43,6 +43,13 @@ public abstract class User {
     public void setCc(String cc) {
         this.cc = cc;
     }
+    public String[][] getProducts() {
+		return products;
+	}
+    public void setProducts(ArrayList<Products[][]> temp) {
+		this.products = products;
+	}
+
 
     public Calendar getDateVinculation() {
         return dateVinculation;
@@ -51,14 +58,9 @@ public abstract class User {
     public void setDateVinculation(Calendar dateVinculation) {
         this.dateVinculation = dateVinculation;
     }
-    public String[][] getProducts() {
-		return products;
-	}
-    public void setProducts(String[][] products) {
-		this.products = products;
-	}
+
 
     public abstract boolean buybook(Products purchasedProduct);
     public abstract boolean buyMagazine(Products purchasedProduct);
-    public abstract String getProductss(Products getProducts);
+    public abstract String getMatrix();
 }

@@ -79,10 +79,58 @@ public class Regular extends User {
         }
     }
 
+    public void organizeProducts() {
+        for (int i = 1; i < newproducts.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (newproducts[i] != null && newproducts[j] != null
+                        && newproducts[i].getDatePost().compareTo(newproducts[j].getDatePost()) < 0) {
+                    Products temp = newproducts[i];
+                    for (int k = i; k > j; k--) {
+                        newproducts[k] = newproducts[k - 1];
+                    }
+                    newproducts[j] = temp;
+                    break;
+                }
+            }
+        }
+    }
+
+    public void createLibrary() {
+        organizeProducts();
+        ArrayList<Products[][]> temp = new ArrayList<>();
+        int cont = 0;
+        for (int h = 0; h < (((int) newproducts.length / 25) + 1); h++) {
+            Products[][] matrix = new Products[5][5];
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[i].length; j++) {
+                    if (cont >= newproducts.length) break;
+                    matrix[i][j] = newproducts[cont];
+                    cont++;
+                }
+            }
+            temp.add(matrix);
+        }
+        setProducts(temp);
+    }
+
     @Override
-    public String getProductss(Products geProducts) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProductss'");
+    public String getMatrix() {
+        String msg = "| _ ||  0  ||  1  ||  2  ||  3  ||  4  |\n";
+        for (int i = 0; i <getListAllLibraries().size(); i++) {
+            for (int j = 0; j < getListAllLibraries().get(i).length; j++) {
+                msg += "|  " + j + "  |";
+                for (int h = 0; h < getListAllLibraries().get(i).length; h++) {
+                    if (getListAllLibraries().get(i)[j][h] != null) {
+                        msg += "| " + getListAllLibraries().get(i)[j][h].getId() + " |";
+                    } else {
+                        msg += "| _ |";
+                    }
+                }
+                msg += "\n";
+            }
+            msg += "\n";
+        }
+        return msg;
     }
     
 }

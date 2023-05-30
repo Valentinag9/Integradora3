@@ -40,10 +40,11 @@ public class Main{
 			System.out.println("7. Buy book");
 			System.out.println("8. Subscribe to a magazine ");
 			System.out.println("9. Reading simulation");
-			System.out.println("10. Exit");
+			System.out.println("10. Show library");
+			System.out.println("11. Exit");
 			int option = reader.nextInt();
 
-		if (option == 10){
+		if (option == 11){
 			System.out.println("You have exited the program");
 			flag = true;
 		}
@@ -81,6 +82,8 @@ public class Main{
 				readingSimulation();
 				
 				break;
+			case 10:
+				biblio();
 			default: 
 				System.out.println("Wrong option, try again");
 				break;
@@ -493,6 +496,54 @@ public class Main{
 			}
 			
 		}
+	
+	public static void biblio(){
+		String query = controller.ListUserRegular();
+		String query1 = controller.ListUserPremium();
+		boolean op = true;
+		boolean op1 = true;
+		System.out.println("Type de user \n1. Regular \n2. Premium");
+		int optionUser = reader.nextInt();
+		switch (optionUser) {
+
+			case 1:
+	
+				if (query.equals("")) {
+					System.out.println("No registered users");
+				} else {
+					System.out.println("This is the list of standard users");
+					System.out.println(query);
+					System.out.println("Select the user");
+					optionUser = reader.nextInt();
+				}
+	
+				break;
+	
+			case 2:
+				if (query1.equals("")) {
+					System.out.println("No registered users");
+				} else {
+					System.out.println("This is the list of Premium users");
+					System.out.println(controller.ListUserPremium());
+					System.out.println("Select the user");
+					optionUser = reader.nextInt();
+				}
+				break;
+		}
+		while (op) {
+			int cont = 0;
+			int currentPage = 1;
+			String option = "";
+			String query3 = controller.consultLibrary(optionUser - 1);
+			if (query3.equals("")) {
+				System.out.println("The user hasn't purchased bibliographic products");
+			} else {
+				System.out.println(query3);
+			}
+	
+		}
+	}
+	
 		
 
 	
